@@ -9,9 +9,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -63,13 +60,13 @@ const ScheduleModal = ({ open, handleClose, Id }) => {
     }
   }, [scheduleData, reset]);
 
+  console.log("scheduleData ===", scheduleData.subjects);
   const onSubmit = (data) => {
     // Transform subjects to the desired format
     const formattedSubjects = data.subjects.map((subject) => ({
       name: subject.name,
       lectures: daysOfWeek.map((day) => subject.lectures[day] || ""), // Ensure all days are accounted for
     }));
-
 
     // Check if any subjects have empty lectures
     const hasEmptyLectures = formattedSubjects.some((subject) =>
@@ -101,7 +98,7 @@ const ScheduleModal = ({ open, handleClose, Id }) => {
   const handleAddSubject = () => {
     appendSubject({
       name: "",
-      lectures: daysOfWeek.map(() => ""),
+      lectures: daysOfWeek.reduce((acc, day) => ({ ...acc, [day]: "" }), {}),
     });
   };
 
@@ -172,31 +169,37 @@ const ScheduleModal = ({ open, handleClose, Id }) => {
                     </FormControl>
                   )}
                 />
-                {daysOfWeek.map((day) => (
-                  <Box key={day} mb={1}>
-                    <Typography variant="subtitle2">{day}</Typography>
-                    <Controller
-                      name={`subjects[${index}].lectures.${day}`}
-                      control={control}
-                      render={({ field }) => (
-                        <RadioGroup
-                          row
-                          value={field.value}
-                          onChange={field.onChange}
-                        >
-                          {timeSlots.map((time) => (
-                            <FormControlLabel
-                              key={time}
-                              value={time}
-                              control={<Radio />}
-                              label={time}
-                            />
-                          ))}
-                        </RadioGroup>
-                      )}
-                    />
+                {scheduleData?.subjects?.map((subject, subjectIndex) => (
+                  <Box key={subject.name} mb={2}>
+                    <Typography variant="h6">{subject.name}</Typography>
+                    {daysOfWeek.map((day, dayIndex) => (
+                      <Box key={day} mb={1}>
+                        <Typography variant="subtitle2">{day}</Typography>
+                        <Controller
+                          name={`subjects[${subjectIndex}].lectures.${day}`}
+                          control={control}
+                          defaultValue={subject.lectures[dayIndex] || ""} // Set default value
+                          render={({ field }) => {
+                            return (
+                              <FormControl fullWidth margin="normal">
+                                <InputLabel>Lecture Time</InputLabel>
+                                <Select {...field}>
+                                  <MenuItem value="">Select Time</MenuItem>
+                                  {timeSlots.map((time) => (
+                                    <MenuItem key={time} value={time}>
+                                      {time}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                            );
+                          }}
+                        />
+                      </Box>
+                    ))}
                   </Box>
                 ))}
+
                 <Button
                   type="button"
                   variant="outlined"

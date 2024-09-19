@@ -9,9 +9,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -42,12 +39,24 @@ const AddModal = ({ open, handleClose, handleAdd }) => {
   const handleAddSubject = () => {
     appendSubject({
       name: "",
-      lectures: daysOfWeek.map(() => ""), // Initialize each lecture with an empty string
+      lectures: daysOfWeek.map(() => ""),
     });
   };
 
   const onSubmit = (data) => {
-    handleAdd(data); // Dispatch add
+    const transformedData = {
+      schoolName: data.schoolName,
+      principalName: data.principalName,
+      vicePrincipalName: data.vicePrincipalName,
+      standard: data.standard,
+      division: data.division,
+      subjects: data.subjects.map((subject) => ({
+        name: subject.name,
+        lectures: daysOfWeek.map((day) => subject.lectures[day] || ""),
+      })),
+    };
+
+    handleAdd(transformedData); // Dispatch add with transformed data
     handleClose(); // Close the modal
     reset(); // Reset the form
   };
@@ -165,18 +174,18 @@ const AddModal = ({ open, handleClose, handleAdd }) => {
                     <Controller
                       name={`subjects[${index}].lectures.${day}`}
                       control={control}
+                      defaultValue={subject.lectures[day] || ""}
                       render={({ field }) => (
-                        <FormControl component="fieldset">
-                          <RadioGroup row {...field}>
+                        <FormControl fullWidth margin="normal">
+                          <InputLabel>Time Slot</InputLabel>
+                          <Select {...field}>
+                            <MenuItem value="">Select Time Slot</MenuItem>
                             {timeSlots.map((time) => (
-                              <FormControlLabel
-                                key={time}
-                                value={time}
-                                control={<Radio />}
-                                label={time}
-                              />
+                              <MenuItem key={time} value={time}>
+                                {time}
+                              </MenuItem>
                             ))}
-                          </RadioGroup>
+                          </Select>
                         </FormControl>
                       )}
                     />

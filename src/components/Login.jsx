@@ -17,20 +17,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const strongPasswordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const handleLogin = (event) => {
     event.preventDefault(); // Prevent default form submission
     if (!username || !password) {
       setFormError("Please fill in both fields.");
-      return;
-    }
-    if (!emailRegex.test(username)) {
-      setFormError("Please enter a valid email.");
-      return;
-    }
-    if (!strongPasswordRegex.test(password)) {
-      setFormError("Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.");
       return;
     }
 
@@ -61,7 +54,9 @@ const LoginPage = () => {
       return;
     }
     if (!strongPasswordRegex.test(signUpPassword)) {
-      alert("Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.");
+      alert(
+        "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character."
+      );
       return;
     }
 

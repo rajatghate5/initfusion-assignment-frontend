@@ -39,7 +39,7 @@ const MainPage = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [scheduleToDelete, setScheduleToDelete] = useState(null);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(1); // Adjust this for number of rows per page
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Adjust this for number of rows per page
 
   useEffect(() => {
     dispatch(fetchSchedules());
@@ -183,7 +183,7 @@ const MainPage = () => {
           <UpdateModal
             open={open}
             handleClose={handleClose}
-            Id={currentSchedule}
+            Id={currentSchedule._id}
             handleUpdate={handleUpdate}
           />
         )
