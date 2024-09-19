@@ -23,11 +23,11 @@ The server will restart if you make changes to the code.
 
 ### 1. Clone the backend Repository
 
-Going to this link [https://github.com/rajatghate5/initfusion-assignment-backend/tree/main]
+Go to this link [https://github.com/rajatghate5/initfusion-assignment-backend/tree/main]
 
 ### 2. Clone the Frontend Repository
 
-First, clone the frontend repository using the following command:
+Clone the frontend repository using the following command:
 
 ```bash
 git clone https://github.com/rajatghate5/initfusion-assignment-frontend.git
