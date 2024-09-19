@@ -18,6 +18,10 @@ Open [http://localhost:3000](http://localhost:3000) to view the server in your b
 
 The server will restart if you make changes to the code.
 
+### ` Credentials
+For Login the credentials is :
+username : rajat1997@gmail.com
+password : 12345
 
 ## Getting Started
 
