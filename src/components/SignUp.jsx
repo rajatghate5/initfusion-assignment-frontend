@@ -8,7 +8,6 @@ const SignupPage = () => {
   const navigate = useNavigate();
 
   const handleSignup = () => {
-    // Handle signup logic here (e.g., API call)
     navigate("/login");
   };
 
