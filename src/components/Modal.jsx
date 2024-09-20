@@ -65,7 +65,7 @@ const ScheduleModal = ({ open, handleClose, Id }) => {
     // Transform subjects to the desired format
     const formattedSubjects = data.subjects.map((subject) => ({
       name: subject.name,
-      lectures: daysOfWeek.map((day) => subject.lectures[day] || ""), // Ensure all days are accounted for
+      lectures: daysOfWeek.map((day) => subject.lectures[day] || ""), 
     }));
 
     // Check if any subjects have empty lectures
